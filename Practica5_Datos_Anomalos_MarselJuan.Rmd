@@ -216,16 +216,41 @@ Escribe una función que detecte los outliers de un vector $x$ para cada uno de 
 
 ```{r , include = FALSE}
 # Regla 3 sigma
+reglasigma <- function(x){
+  media <- mean(x, na.rm=TRUE)
+  std <- sd(x, na.rm=TRUE)
+  posiciones_outliers <- (!is.na(x) & (abs(x-media) > 3*std))
+  return(posiciones_outliers)
+}
 
 
 # Identificador Hampel
-
+reglahampel <- function(x){
+  MADM <- madm(x)
+  mediana <- median(x, na.rm=TRUE)
+  posiciones_outliers <- (!is.na(x) & (abs(x - mediana) > 3*MADM))
+  return(posiciones_outliers)
+}
 
 
 # Regla boxplot
+reglaboxplot <- function(x){
+  q25 <- quantile(x, 0.25, na.rm=TRUE)
+  q75 <- quantile(x, 0.75, na.rm=TRUE)
+  IQR <- IQR(x, na.rm=TRUE)
+  posiciones_outliers <- (!is.na(x) & (x > ((q75 + 1.5 * IQR)) | 
+                                            (x < (q25 - 1.5 * IQR))))
+  return(posiciones_outliers)
+}
 
 
 # Percentiles
+reglapercentil <- function(x){
+  q05 <- quantile(x, 0.05, na.rm=TRUE)
+  q95 <- quantile(x, 0.95, na.rm=TRUE)
+  posiciones_outliers <- (!is.na(x) & ((x > q95) | (x < q05)))
+  return(posiciones_outliers)
+}
 
 ```
 
