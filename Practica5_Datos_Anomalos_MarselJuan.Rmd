@@ -325,6 +325,13 @@ Nota: usa en `geom_point` con la opción `position='jitter'` para mejorar la leg
 
 ```{r Solucion ejercicio 8, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 
+clean_iris %>% select(Petal.Length, Petal.Length_sigma:Petal.Length_percent) %>%
+  pivot_longer(names_to="Regla", values_to="Outlier", 
+               cols=c(Petal.Length_sigma, Petal.Length_hampel,
+                      Petal.Length_box, Petal.Length_percent)) %>%
+  ggplot(aes(x=Regla, y=Petal.Length, color=Outlier)) + 
+    geom_point(position='jitter')
+
 ```
 
 # Imputación de datos
