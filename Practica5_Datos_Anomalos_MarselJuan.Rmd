@@ -2,15 +2,15 @@
 title: "Práctica 5. Datos Anómalos"
 subtitle: "Análisis Exploratorio de Datos, Máster en Ciencia de Datos - UV"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: no
   html_document:
     echo: yes
     number_sections: no
     theme: lumen
     toc: yes
-  pdf_document:
-    toc: yes
-    toc_depth: 3
-    number_sections: no
 ---
 
 ```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
@@ -371,7 +371,16 @@ Vamos a comparar ahora los dos métodos de imputación gráficamente eliminando 
   * Recalcula las reglas de identificación de outliers (Ejercicio 6) para la nueva variable `Petal.Length2`.
   
 ```{r Solucion ejercicio 10a, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-
+dirty_iris <- dirty_iris %>%
+  mutate(across(
+    .col=Petal.Length2,
+    .fns=list(
+      sigma = ~reglasigma(.x),
+      hampel = ~reglahampel(.x),
+      box = ~reglaboxplot(.x),
+      percent = ~reglapercentil(.x)
+    )
+  ))
  
 ```
 
