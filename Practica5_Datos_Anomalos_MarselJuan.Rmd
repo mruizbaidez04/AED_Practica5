@@ -349,13 +349,18 @@ Se puede realizar una imputación generalizada (usando todos los valores de la v
   * Imputa los missing data en `Petal.Length` empleando la media. Nota: Puedes reemplazar los valores vacios usando `mutate` con `ifelse` creando una nueva variable `Petal.Length1`.
 
 ```{r Solucion ejercicio 9a, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-
+dirty_iris <- dirty_iris %>% 
+  mutate(Petal.Length1 = ifelse(is.na(Petal.Length), 
+                                mean(Petal.Length, na.rm=TRUE), Petal.Length))
 ```
 
   * Imputa los missing data en `Petal.Length` empleando en esta ocasión la media para cada tipo de `Species` (usar`group_by` y `mutate`) creando una nueva variable `Petal.Length2`.
 
 ```{r Solucion ejercicio 9b, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-
+dirty_iris <- dirty_iris %>% 
+  group_by(Species) %>%
+  mutate(Petal.Length2 = ifelse(is.na(Petal.Length), 
+                                mean(Petal.Length, na.rm=TRUE), Petal.Length))
 
 ```
 
