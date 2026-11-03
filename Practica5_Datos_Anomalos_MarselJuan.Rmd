@@ -64,7 +64,7 @@ Vamos a trabajar con el conjunto de datos *dirty_iris*, que ya conocemos, que co
 
 ```{r}
 rm(list=ls())
-dirty_iris <- read_csv("data/dirty_iris.csv")
+dirty_iris <- read_csv("./data/dirty_iris.csv")
 ```
 
 # Detección de inconsistencias en los datos
@@ -77,8 +77,26 @@ Inspecciona visualmente los valores del conjunto de datos (`View`) y ordena de m
 
 ```{r Solucion ejercicio 1, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 # Medidas con valores faltantes, longitudes negativas y cero
+View(dirty_iris)
+
+# Orden descendente:
+sort(dirty_iris$Sepal.Length, decreasing = TRUE)
+sort(dirty_iris$Sepal.Width, decreasing = TRUE)
+sort(dirty_iris$Petal.Length, decreasing = TRUE)
+sort(dirty_iris$Petal.Width, decreasing = TRUE)
 
 ```
+
+**Respuesta**: Observamos longitudes y amplitudes de sepalo y longitud de petalo muy elevadas, así como valores 0 o negativos. Además, tenemos un valor infinito para la amplitud de petalo. También observamos que los valores `NA` no aparecen
+
+```{r}
+# Orden ascendiente:
+sort(dirty_iris$Sepal.Length, decreasing = FALSE)
+sort(dirty_iris$Sepal.Width, decreasing = FALSE)
+sort(dirty_iris$Petal.Length, decreasing = FALSE)
+sort(dirty_iris$Petal.Width, decreasing = FALSE)
+```
+
 
 ## Ejercicio 2: Valores especiales
 
