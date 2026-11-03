@@ -262,7 +262,16 @@ Nota: podría extenderse la aplicación a todas las variables numéricas usando 
 
 ```{r Solucion ejercicio 6, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 
-
+clean_iris <- clean_iris %>%
+  mutate(across(
+    .cols=c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+    .fns=list(
+      sigma = ~reglasigma(.x),
+      hampel = ~reglahampel(.x),
+      box = ~reglaboxplot(.x),
+      percent = ~reglapercentil(.x)
+    )
+  ))
 
 ```
 
