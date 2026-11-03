@@ -163,7 +163,43 @@ Hazlo para el data frame con observaciones completas `clean_iris` (que no tiene 
 
 ```{r , include = TRUE}
 
+madm <- function(x){
+  mediana <- median(x, na.rm=TRUE)
+  madm <- 1.4826 * median(abs(x-mediana), na.rm=TRUE)
+  return(madm)
+}
+
+estadisticos_clean <- clean_iris %>%
+  summarise(across(
+    .cols=c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+    .fns=list(
+      media = ~mean(.x, na.rm=TRUE),
+      std = ~sd(.x, na.rm=TRUE),
+      MADM = ~madm(.x),
+      IQR = ~IQR(.x, na.rm=TRUE)
+    ),
+    .names="{.col}_{.fn}"
+  ))
+
+estadisticos_clean
+
+estadisticos_dirty <- dirty_iris %>%
+  summarise(across(
+    .cols=c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"),
+    .fns=list(
+      media = ~mean(.x, na.rm=TRUE),
+      std = ~sd(.x, na.rm=TRUE),
+      MADM = ~madm(.x),
+      IQR = ~IQR(.x, na.rm=TRUE)
+    ),
+    .names="{.col}_{.fn}"
+  ))
+
+estadisticos_dirty
+
 ```
+
+**Respuesta**: Para la variable `Petal.Length` observamos que la media y la desviación estándar presentan valores más bajos en el conjunto de datos limpio, el MADM se mantiene igual y el rango intercuartílico es ligeramente mayor en el conjunto limpio.
 
 
 ## Ejercicio 5: Métodos de detección de outliers
