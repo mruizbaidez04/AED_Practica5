@@ -283,8 +283,39 @@ En los métodos de detección de outliers analizados, examina los resultados com
   * Los valores etiquetados como outliers (ordenados de menor a mayor).
 
 ```{r Solucion ejercicio 7, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+numero_outliers <- clean_iris %>% 
+  select(Sepal.Length_sigma:Petal.Width_percent) %>%
+  sapply(FUN=sum)
 
+numero_outliers
 ```
+
+```{r}
+print("Outliers Sepal.Length")
+for (i in 6:9){
+  cat(colnames(clean_iris)[i], ":", 
+      clean_iris$Sepal.Length[clean_iris[, i] == TRUE], "\n")
+}
+
+print("Outliers Sepal.Width")
+for (i in 10:13){
+  cat(colnames(clean_iris)[i], ":", 
+      clean_iris$Sepal.Width[clean_iris[, i] == TRUE], "\n")
+}
+
+print("Outliers Petal.Length")
+for (i in 14:17){
+  cat(colnames(clean_iris)[i], ":", 
+      clean_iris$Petal.Length[clean_iris[, i] == TRUE], "\n")
+}
+
+print("Outliers Petal.Width")
+for (i in 18:21){
+  cat(colnames(clean_iris)[i], ":", 
+      clean_iris$Petal.Width[clean_iris[, i] == TRUE], "\n")
+}
+```
+
 
 ## Ejercicio 8: Representación gráfica
 
